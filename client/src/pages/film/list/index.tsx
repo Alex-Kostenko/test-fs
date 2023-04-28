@@ -1,13 +1,18 @@
 import React, { FC, useEffect } from "react";
 import { Col, Row, Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import Card from "../../../components/FilmCard";
 import Layout from "../../../components/Layout";
 import { filmsService } from "../../../api/filmService";
 import { useApi } from "../../../utils/hooks";
+import { redirect } from "../../../utils";
+import { PathsEnum } from "../../../utils/enums";
+import Loader from "../../../components/Loader";
 
 const HomePage: FC = () => {
   const { data, updateData } = useApi<Film[]>();
+  const nav = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -17,11 +22,7 @@ const HomePage: FC = () => {
   }, [updateData]);
 
   if (!data) {
-    return (
-      <Layout>
-        <Skeleton loading active />
-      </Layout>
-    );
+    return <Loader />;
   }
 
   return (
@@ -32,6 +33,7 @@ const HomePage: FC = () => {
             <Card
               title={`${film.title} (ep.${film.episode_id})`}
               desc={film.opening_crawl}
+              onClick={() => redirect(film.url, PathsEnum.film, ":filmId", nav)}
             />
           </Col>
         ))}

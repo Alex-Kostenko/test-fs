@@ -8,6 +8,10 @@ class FilmsService {
     const resp = await api.get("films");
     return resp.data;
   }
+  async getFilmById(filmId: string): Promise<Film> {
+    const resp = await api.get("films/" + filmId);
+    return resp.data;
+  }
 }
 
 export const filmsService = new FilmsService();

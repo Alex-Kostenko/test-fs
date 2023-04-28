@@ -5,11 +5,12 @@ import React, { FC } from "react";
 interface CardProps {
   title: string;
   desc: string;
+  onClick?: () => void;
 }
 
-const Card: FC<CardProps> = ({ title, desc }) => {
+const Card: FC<CardProps> = ({ title, desc, onClick }) => {
   return (
-    <AntCard hoverable title={title}>
+    <AntCard hoverable title={title} onClick={onClick}>
       <Meta description={desc} />
     </AntCard>
   );

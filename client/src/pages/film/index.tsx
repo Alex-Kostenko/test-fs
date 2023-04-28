@@ -1,41 +1,51 @@
 import React, { FC, useEffect } from "react";
-import { Col, Row, Skeleton } from "antd";
+import { Col, Descriptions, Row, Skeleton } from "antd";
 
 import Card from "../../components/FilmCard";
 import Layout from "../../components/Layout";
 import { filmsService } from "../../api/filmService";
 import { useApi } from "../../utils/hooks";
+import { useParams } from "react-router-dom";
+import Loader from "../../components/Loader";
+
+const { Item } = Descriptions;
 
 const FilmPage: FC = () => {
-  const { data, updateData } = useApi<Film[]>();
+  const { data, updateData } = useApi<Film>();
+  const { filmId } = useParams();
 
   useEffect(() => {
     (async () => {
-      const res = await filmsService.getFilms();
-      updateData(res.results);
+      if (filmId) {
+        const res = await filmsService.getFilmById(filmId);
+        updateData(res);
+      }
     })();
   }, [updateData]);
 
   if (!data) {
-    return (
-      <Layout>
-        <Skeleton loading active />
-      </Layout>
-    );
+    return <Loader />;
   }
 
   return (
     <Layout>
-      <Row gutter={[16, 16]}>
-        {data.map((film) => (
-          <Col xs={24} md={8} key={film.title}>
-            <Card
-              title={`${film.title} (ep.${film.episode_id})`}
-              desc={film.opening_crawl}
-            />
-          </Col>
-        ))}
-      </Row>
+      <Descriptions title="Detailed Information" bordered>
+        <Item label="Title" span={2}>
+          {data.title}
+        </Item>
+        <Item label="Episode" span={3}>
+          {data.episode_id}
+        </Item>
+        <Item label="Opening Crawl" span={3}>
+          {data.opening_crawl}
+        </Item>
+        <Item label="Producer" span={3}>
+          {data.producer}
+        </Item>
+        <Item label="Release Date" span={3}>
+          {data.release_date}
+        </Item>
+      </Descriptions>
     </Layout>
   );
 };

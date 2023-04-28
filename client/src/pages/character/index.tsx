@@ -1,38 +1,50 @@
 import React, { FC, useEffect } from "react";
-import { Col, Row, Skeleton } from "antd";
+import { Descriptions, Skeleton } from "antd";
+import { useParams } from "react-router-dom";
 
-import { characterService } from "../../api/characterService";
-import { useApi } from "../../utils/hooks";
-import Card from "../../components/FilmCard";
 import Layout from "../../components/Layout";
+import { useApi } from "../../utils/hooks";
+import { characterService } from "../../api/characterService";
+import Loader from "../../components/Loader";
+
+const { Item } = Descriptions;
 
 const CharactersPage: FC = () => {
-  const { data, updateData } = useApi<Character[]>();
+  const { data, updateData } = useApi<Character>();
+  const { characterId } = useParams();
 
   useEffect(() => {
     (async () => {
-      const res = await characterService.getCharacters();
-      updateData(res.results);
+      if (characterId) {
+        const res = await characterService.getCharacterById(characterId);
+        updateData(res);
+      }
     })();
   }, [updateData]);
 
   if (!data) {
-    return (
-      <Layout>
-        <Skeleton loading active />
-      </Layout>
-    );
+    return <Loader />;
   }
 
   return (
     <Layout>
-      <Row gutter={[16, 16]}>
-        {data.map((hero) => (
-          <Col xs={24} md={8}>
-            <Card title={hero.name} desc={hero.birth_year} />
-          </Col>
-        ))}
-      </Row>
+      <Descriptions title="Detailed Information" bordered>
+        <Item label="Title" span={2}>
+          {data.birth_year}
+        </Item>
+        {/* <Item label="Episode" span={3}>
+          {data.episode_id}
+        </Item>
+        <Item label="Opening Crawl" span={3}>
+          {data.opening_crawl}
+        </Item>
+        <Item label="Producer" span={3}>
+          {data.producer}
+        </Item>
+        <Item label="Release Date" span={3}>
+          {data.release_date}
+        </Item> */}
+      </Descriptions>
     </Layout>
   );
 };
