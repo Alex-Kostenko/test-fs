@@ -1,5 +1,3 @@
-import { PathsEnum } from "./enums";
-
 export const redirect = (
   filmUrl: string,
   basePath: string,

@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from "react";
-import { Col, Descriptions, Row, Skeleton } from "antd";
+import { Descriptions } from "antd";
 
-import Card from "../../components/FilmCard";
 import Layout from "../../components/Layout";
 import { filmsService } from "../../api/filmService";
 import { useApi } from "../../utils/hooks";
@@ -21,7 +20,7 @@ const FilmPage: FC = () => {
         updateData(res);
       }
     })();
-  }, [updateData]);
+  }, [updateData, filmId]);
 
   if (!data) {
     return <Loader />;

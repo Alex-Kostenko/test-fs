@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Descriptions, Skeleton } from "antd";
+import { Descriptions } from "antd";
 import { useParams } from "react-router-dom";
 
 import Layout from "../../components/Layout";
@@ -20,7 +20,7 @@ const CharactersPage: FC = () => {
         updateData(res);
       }
     })();
-  }, [updateData]);
+  }, [updateData, characterId]);
 
   if (!data) {
     return <Loader />;

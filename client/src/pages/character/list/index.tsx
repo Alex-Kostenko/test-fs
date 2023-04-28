@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Col, Row, Skeleton } from "antd";
+import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import Card from "../../../components/FilmCard";
