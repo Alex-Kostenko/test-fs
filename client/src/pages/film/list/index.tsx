@@ -1,32 +1,50 @@
-import React, { FC, useEffect } from "react";
-import { Col, Row } from "antd";
+import React, { FC, useEffect, useState } from "react";
+import { Col, Divider, Row } from "antd";
+import Search from "antd/es/input/Search";
 import { useNavigate } from "react-router-dom";
 
 import Card from "../../../components/FilmCard";
 import Layout from "../../../components/Layout";
-import { filmsService } from "../../../api/filmService";
+import Loader from "../../../components/Loader";
 import { useApi } from "../../../utils/hooks";
 import { redirect } from "../../../utils";
 import { PathsEnum } from "../../../utils/enums";
-import Loader from "../../../components/Loader";
+import { filmsService } from "../../../api/filmService";
 
 const HomePage: FC = () => {
-  const { data, updateData } = useApi<Film[]>();
+  const { data, updateData, isLoading, updateLoading } = useApi<Film[]>();
+  const [search, setSearch] = useState("");
   const nav = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const res = await filmsService.getFilms();
+      updateLoading(true);
+      const res = await filmsService
+        .getFilms(search)
+        .finally(() => updateLoading(false));
       updateData(res.results);
     })();
-  }, [updateData]);
+  }, [updateData, updateLoading, search]);
 
   if (!data) {
     return <Loader />;
   }
 
+  console.log(isLoading);
+
   return (
     <Layout>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={8}>
+          <Search
+            placeholder="Enter text"
+            size="large"
+            loading={isLoading}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Col>
+      </Row>
+      <Divider orientation="left">Films list:</Divider>
       <Row gutter={[16, 16]}>
         {data.map((film) => (
           <Col xs={24} md={8}>

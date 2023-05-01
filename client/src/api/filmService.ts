@@ -4,8 +4,8 @@ import { api } from ".";
  * Manages Films calls
  */
 class FilmsService {
-  async getFilms(): Promise<Paginator<Film[]>> {
-    const resp = await api.get("films");
+  async getFilms(search: string): Promise<Paginator<Film[]>> {
+    const resp = await api.get("films", { params: { search } });
     return resp.data;
   }
   async getFilmById(filmId: string): Promise<Film> {

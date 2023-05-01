@@ -1,6 +1,7 @@
 import { Card as AntCard } from "antd";
-import Meta from "antd/es/card/Meta";
 import React, { FC } from "react";
+
+const { Meta } = AntCard;
 
 interface CardProps {
   title: string;

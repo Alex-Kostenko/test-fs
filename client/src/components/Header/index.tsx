@@ -1,6 +1,7 @@
-import { Menu } from "antd";
-import { Header as AntHeader } from "antd/es/layout/layout";
+import { Menu, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
+
+const { Header: AntHeader } = Layout;
 
 const Header = () => {
   const nav = useNavigate();

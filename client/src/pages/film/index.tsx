@@ -1,26 +1,30 @@
 import React, { FC, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Descriptions } from "antd";
 
 import Layout from "../../components/Layout";
-import { filmsService } from "../../api/filmService";
-import { useApi } from "../../utils/hooks";
-import { useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
+import { useApi } from "../../utils/hooks";
+import { PathsEnum } from "../../utils/enums";
+import { filmsService } from "../../api/filmService";
 
 const { Item } = Descriptions;
 
 const FilmPage: FC = () => {
   const { data, updateData } = useApi<Film>();
   const { filmId } = useParams();
+  const nav = useNavigate();
 
   useEffect(() => {
     (async () => {
       if (filmId) {
         const res = await filmsService.getFilmById(filmId);
         updateData(res);
+      } else {
+        nav(PathsEnum.home);
       }
     })();
-  }, [updateData, filmId]);
+  }, [updateData, nav, filmId]);
 
   if (!data) {
     return <Loader />;

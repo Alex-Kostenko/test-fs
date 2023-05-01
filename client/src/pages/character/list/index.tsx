@@ -1,25 +1,47 @@
-import React, { FC, useEffect } from "react";
-import { Col, Row } from "antd";
+import React, { FC, useEffect, useState } from "react";
+import { Col, Divider, Pagination, Row, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import Card from "../../../components/FilmCard";
 import Layout from "../../../components/Layout";
-import { characterService } from "../../../api/characterService";
+import Loader from "../../../components/Loader";
 import { PathsEnum } from "../../../utils/enums";
 import { useApi } from "../../../utils/hooks";
 import { redirect } from "../../../utils";
-import Loader from "../../../components/Loader";
+import { characterService } from "../../../api/characterService";
+
+const { Search } = Input;
 
 const CharacterPage: FC = () => {
-  const { data, updateData } = useApi<Character[]>();
+  const {
+    data,
+    updateData,
+    isLoading,
+    updateLoading,
+    page,
+    updatePage,
+    count,
+    updateCount,
+  } = useApi<Character[]>();
+  const [search, setSearch] = useState("");
+
   const nav = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const res = await characterService.getCharacters();
+      updateLoading(true);
+      const res = await characterService
+        .getCharacters(search, page)
+        .finally(() => updateLoading(false));
       updateData(res.results);
+      updateCount(res.count);
     })();
-  }, [updateData]);
+  }, [updateData, updateCount, updateLoading, page, search]);
+
+  const handleSearch = (value: string) => {
+    updatePage(1);
+    setSearch(value);
+  };
 
   if (!data) {
     return <Loader />;
@@ -27,6 +49,17 @@ const CharacterPage: FC = () => {
 
   return (
     <Layout>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={8}>
+          <Search
+            placeholder="Enter text"
+            size="large"
+            loading={isLoading}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </Col>
+      </Row>
+      <Divider orientation="left">Characters list:</Divider>
       <Row gutter={[16, 16]}>
         {data?.map((hero) => (
           <Col xs={24} md={8}>
@@ -40,6 +73,13 @@ const CharacterPage: FC = () => {
           </Col>
         ))}
       </Row>
+      <Divider orientation="left" />
+      <Pagination
+        current={page}
+        onChange={updatePage}
+        total={count}
+        showSizeChanger={false}
+      />
     </Layout>
   );
 };

@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 
 import HomePage from "../pages/film/list";
 import ErrorPage from "../pages/error";
-import { PathsEnum } from "../utils/enums";
 import CharactersPage from "../pages/character/list";
 import CharacterPage from "../pages/character";
 import FilmPage from "../pages/film";
+import { PathsEnum } from "../utils/enums";
 
 const router = createBrowserRouter([
   {
