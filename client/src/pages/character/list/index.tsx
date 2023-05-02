@@ -62,7 +62,7 @@ const CharacterPage: FC = () => {
       <Divider orientation="left">Characters list:</Divider>
       <Row gutter={[16, 16]}>
         {data?.map((hero) => (
-          <Col xs={24} md={8}>
+          <Col xs={24} md={8} key={hero.name}>
             <Card
               title={hero.name}
               desc={hero.birth_year}
