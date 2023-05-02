@@ -10,7 +10,13 @@
 - `yarn`
 - `yarn run start:dev`
 
-## Tested
+## For start client tests:
+
+- `cd client`
+- `yarn`
+- `yarn run test`
+
+### Tested
 
 - `NodeJs v20.0.0`
 - `yarn v1.22.10`
