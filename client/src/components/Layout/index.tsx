@@ -1,8 +1,8 @@
 import React, { FC, PropsWithChildren } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Layout as AntL } from "antd";
 
 import Header from "../Header";
-import { useLocation, useNavigate } from "react-router-dom";
 import { PathsEnum } from "../../utils/enums";
 
 const { Content, Footer } = AntL;

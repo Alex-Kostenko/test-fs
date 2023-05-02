@@ -8,10 +8,15 @@ const Header = () => {
   return (
     <AntHeader>
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" onSelect={({ key }) => nav(key)}>
-        <Menu.Item key="/">Films</Menu.Item>
-        <Menu.Item key="/characters">Characters</Menu.Item>
-      </Menu>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        onSelect={({ key }) => nav(key)}
+        items={[
+          { key: "/", label: "Films", title: "Films" },
+          { key: "/characters", label: "Characters", title: "Characters" },
+        ]}
+      />
     </AntHeader>
   );
 };

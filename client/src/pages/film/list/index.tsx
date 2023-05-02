@@ -30,8 +30,6 @@ const HomePage: FC = () => {
     return <Loader />;
   }
 
-  console.log(isLoading);
-
   return (
     <Layout>
       <Row gutter={[16, 16]}>
@@ -47,7 +45,7 @@ const HomePage: FC = () => {
       <Divider orientation="left">Films list:</Divider>
       <Row gutter={[16, 16]}>
         {data.map((film) => (
-          <Col xs={24} md={8}>
+          <Col xs={24} md={8} key={film.created}>
             <Card
               title={`${film.title} (ep.${film.episode_id})`}
               desc={film.opening_crawl}

@@ -4,7 +4,7 @@ import Layout from "../Layout";
 
 const Loader: FC = () => (
   <Layout>
-    <Skeleton loading active />
+    <Skeleton loading active data-testid="status" />
   </Layout>
 );
 
