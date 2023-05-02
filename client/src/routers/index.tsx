@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import HomePage from "../pages/film/list";
+import FilmsList from "../pages/film/list";
 import ErrorPage from "../pages/error";
 import CharactersPage from "../pages/character/list";
 import CharacterPage from "../pages/character";
@@ -10,7 +10,7 @@ import { PathsEnum } from "../utils/enums";
 const router = createBrowserRouter([
   {
     path: PathsEnum.home,
-    element: <HomePage />,
+    element: <FilmsList />,
     errorElement: <ErrorPage />,
   },
   {

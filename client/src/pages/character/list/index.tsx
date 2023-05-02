@@ -6,7 +6,7 @@ import Card from "../../../components/FilmCard";
 import Layout from "../../../components/Layout";
 import Loader from "../../../components/Loader";
 import { PathsEnum } from "../../../utils/enums";
-import { useApi } from "../../../utils/hooks";
+import { useApi } from "../../../hooks/useApi";
 import { redirect } from "../../../utils";
 import { characterService } from "../../../api/characterService";
 

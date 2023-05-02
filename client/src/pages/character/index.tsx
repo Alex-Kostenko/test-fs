@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
-import { useApi } from "../../utils/hooks";
+import { useApi } from "../../hooks/useApi";
 import { PathsEnum } from "../../utils/enums";
 import { characterService } from "../../api/characterService";
 

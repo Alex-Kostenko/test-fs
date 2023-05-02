@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import Card from "../../../components/FilmCard";
 import Layout from "../../../components/Layout";
 import Loader from "../../../components/Loader";
-import { useApi } from "../../../utils/hooks";
+import { useApi } from "../../../hooks/useApi";
 import { redirect } from "../../../utils";
 import { PathsEnum } from "../../../utils/enums";
 import { filmsService } from "../../../api/filmService";
 
-const HomePage: FC = () => {
+const FilmsList: FC = () => {
   const { data, updateData, isLoading, updateLoading } = useApi<Film[]>();
   const [search, setSearch] = useState("");
   const nav = useNavigate();
@@ -58,4 +58,4 @@ const HomePage: FC = () => {
   );
 };
 
-export default HomePage;
+export default FilmsList;
